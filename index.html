@@ -2,275 +2,127 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>romashka.rbxmarket — Маркет роблоксов</title>
+  <title>Ева — домашний статус</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="brand-block">
-        <div class="brand-logo-circle">
-          <span class="brand-letter">R</span>
-        </div>
-        <div>
-          <div class="brand-name">romashka.rbxmarket</div>
-          <div class="brand-tagline">Покупайте Robux только у нас</div>
-        </div>
+  <header class="top-bar">
+    <div class="logo-block">
+      <div class="logo-circle">Е</div>
+      <div class="logo-text">
+        <div class="logo-title">Ева — семейный статус</div>
+        <div class="logo-subtitle">Для нас: родителей и Ромашки</div>
       </div>
-
-      <nav class="main-nav">
-        <button class="nav-btn active" data-tab-target="home">Главная</button>
-        <button class="nav-btn" data-tab-target="pricing">Цены</button>
-        <button class="nav-btn" data-tab-target="discounts">Скидки</button>
-        <button class="nav-btn" data-tab-target="games">Другие игры</button>
-        <button class="nav-btn" data-tab-target="faq">FAQ</button>
-        <button class="nav-btn" data-tab-target="about">О сервисе</button>
-      </nav>
     </div>
-
-    <div class="mascot-wrapper">
-      <div class="mascot-svg">
-        <!-- упрощённый кот-маскот -->
-        <svg viewBox="0 0 200 200">
-          <defs>
-            <radialGradient id="bgCircle" cx="50%" cy="40%" r="60%">
-              <stop offset="0%" stop-color="#ffd28a"/>
-              <stop offset="100%" stop-color="#ff9d2c"/>
-            </radialGradient>
-          </defs>
-          <circle cx="100" cy="105" r="80" fill="url(#bgCircle)" opacity="0.22"/>
-          <g id="cat">
-            <circle cx="100" cy="100" r="55" fill="#ffb45c"/>
-            <!-- глаза -->
-            <ellipse cx="80" cy="90" rx="8" ry="12" fill="#000">
-              <animate attributeName="ry" values="12;3;12" dur="3s" repeatCount="indefinite"/>
-            </ellipse>
-            <ellipse cx="120" cy="90" rx="8" ry="12" fill="#000">
-              <animate attributeName="ry" values="12;3;12" dur="3s" repeatCount="indefinite"/>
-            </ellipse>
-            <!-- нос -->
-            <circle cx="100" cy="112" r="5" fill="#000" />
-            <!-- рот -->
-            <path d="M88 120 Q100 130 112 120" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <!-- лапа с лайком -->
-            <path d="M135 135 Q155 120 155 145 Q145 150 137 145" stroke="#ffb45c" stroke-width="10" fill="none" stroke-linecap="round">
-              <animate attributeName="d"
-                       dur="2.4s"
-                       repeatCount="indefinite"
-                       values="
-                       M135 135 Q155 120 155 145 Q145 150 137 145;
-                       M135 135 Q160 115 160 145 Q148 152 137 145;
-                       M135 135 Q155 120 155 145 Q145 150 137 145" />
-            </path>
-          </g>
-        </svg>
+    <div class="top-weather">
+      <div class="weather-label">Погода</div>
+      <div class="weather-main">
+        <span id="weather-temp">– °C</span>
+        <span id="weather-desc">настрой за Еву</span>
       </div>
-      <div class="mascot-bubble">
-        <div class="bubble-line" data-phrase="1">Лучший курс на Robux</div>
-        <div class="bubble-line hidden" data-phrase="2">Сначала выбери пакет, потом пиши мне в Telegram</div>
-        <div class="bubble-line hidden" data-phrase="3">Только ручные и безопасные выдачи</div>
+      <button id="weather-refresh" class="btn-secondary small">Обновить</button>
+      <div class="weather-note">
+        Здесь можно подключить реальный прогноз позже (через API).
       </div>
     </div>
   </header>
 
-  <main class="site-main">
-    <!-- Главная -->
-    <section class="tab active" id="tab-home">
-      <h1>Роблоксы по-крупному, но аккуратно</h1>
-      <p class="lead">
-        Здесь ты можешь заказать Robux по честному курсу, с понятными сроками и живым
-        человеком в Telegram. Это не площадка для всех — управляет только владелец romashka.rbxmarket.
+  <main class="layout">
+    <!-- Левая колонка — текущий статус -->
+    <section class="panel panel-main">
+      <h1>Текущий статус Евы</h1>
+      <p class="hint">
+        Здесь мы пишем, что с Евой сейчас: гулять, есть, пить, спать, играть и т.д.
       </p>
-      <div class="home-grid">
-        <div class="home-card">
-          <h2>Как это работает</h2>
-          <ol>
-            <li>Смотри прайс во вкладке «Цены».</li>
-            <li>Выбирай нужный пакет или объём.</li>
-            <li>Нажимай «Связаться в Telegram» и отправляй заявку.</li>
-            <li>Ждёшь подтверждения и оплачиваешь.</li>
-            <li>В течение 5–7 дней получаешь Robux на аккаунт.</li>
-          </ol>
+
+      <form id="status-form" class="status-form">
+        <label class="field">
+          <span>Статус (что с Евой сейчас)</span>
+          <textarea id="status-text" rows="2" placeholder="Например: Ева готова гулять, ждёт поводок 🐶"></textarea>
+        </label>
+
+        <div class="toggles">
+          <label class="toggle">
+            <input type="checkbox" id="flag-walk" />
+            <span>Хочет гулять</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="flag-eat" />
+            <span>Хочет есть</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="flag-drink" />
+            <span>Хочет пить</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="flag-play" />
+            <span>Хочет играть</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="flag-cold" />
+            <span>На улице холодно (нужен костюм)</span>
+          </label>
         </div>
-        <div class="home-card highlight">
-          <h2>Быстрый переход</h2>
-          <p>Часто берут сразу пакеты от 1000 Robux и выше. Если не хочешь разбираться — просто напиши, сколько хочешь получить.</p>
-          <button class="primary-btn" data-scroll-to="pricing">Посмотреть цены</button>
-          <button class="ghost-btn" data-scroll-to="contact">Сразу написать в Telegram</button>
-        </div>
+
+        <label class="field inline-field">
+          <span>Оценка настроения (0–10)</span>
+          <input type="number" id="mood" min="0" max="10" placeholder="Например: 8" />
+        </label>
+
+        <button type="submit" class="btn-primary">Обновить статус</button>
+      </form>
+
+      <div class="current-status" id="current-status">
+        <h2>Сейчас для всех:</h2>
+        <p class="status-text">Статус ещё не задан.</p>
+        <ul class="status-flags"></ul>
+        <p class="status-meta"></p>
       </div>
     </section>
 
-    <!-- Цены -->
-    <section class="tab" id="tab-pricing">
-      <h1>Цены на Robux</h1>
-      <p class="lead">Базовый прайс. Выставляет и изменяет его только владелец сервиса. Другие пользователи ничего добавить не могут.</p>
-
-      <div class="pricing-grid">
-        <article class="price-card">
-          <h2>Старт</h2>
-          <p class="price-main">50 Robux — 95 ₽</p>
-          <p class="price-sub">Проверить сервис</p>
-        </article>
-        <article class="price-card">
-          <h2>Мини</h2>
-          <p class="price-main">100 Robux — 170 ₽</p>
-          <p class="price-sub">Небольшая докрутка баланса</p>
-        </article>
-        <article class="price-card">
-          <h2>Комфорт</h2>
-          <p class="price-main">250 Robux — 399 ₽</p>
-          <p class="price-sub">Удобный пакет для скинов</p>
-        </article>
-        <article class="price-card">
-          <h2>Популярный</h2>
-          <p class="price-main">500 Robux — 687 ₽</p>
-          <p class="price-sub">Часто берут на тест проекта</p>
-        </article>
-        <article class="price-card">
-          <h2>Игровой</h2>
-          <p class="price-main">1000 Robux — 899 ₽</p>
-          <p class="price-sub">Оптимально для активной игры</p>
-        </article>
-        <article class="price-card">
-          <h2>Студийный</h2>
-          <p class="price-main">5000 Robux — 4000 ₽</p>
-          <p class="price-sub">Для карт, проектов, ивентов</p>
-        </article>
-        <article class="price-card">
-          <h2>Крупный</h2>
-          <p class="price-main">10000 Robux — 8697 ₽</p>
-          <p class="price-sub">Опт с честным курсом</p>
-        </article>
-        <article class="price-card">
-          <h2>Индивидуально</h2>
-          <p class="price-main">50 000 – 1 000 000 Robux</p>
-          <p class="price-sub">Пишем курс персонально</p>
-        </article>
+    <!-- Правая колонка — история, прогулки, фото -->
+    <section class="panel panel-side">
+      <div class="sub-panel">
+        <h2>История статусов</h2>
+        <p class="hint">Последние записи, чтобы помнить, что с Евой было в течение дня.</p>
+        <ul id="history-list" class="history-list">
+          <!-- Записи добавляются скриптом -->
+        </ul>
+        <button id="clear-history" class="btn-secondary small">Очистить историю (на этом устройстве)</button>
       </div>
 
-      <div class="contact-banner" id="contact">
-        <div>
-          <h2>Готов оформить заказ?</h2>
-          <p>Заполни форму ниже — мы соберём текст заявки и откроем Telegram с готовым сообщением.</p>
-        </div>
-        <button class="primary-btn" data-scroll-to="discounts">Посчитать со скидкой</button>
-      </div>
-    </section>
-
-    <!-- Скидки -->
-    <section class="tab" id="tab-discounts">
-      <h1>Скидки и промокоды</h1>
-      <p class="lead">Здесь ты можешь примерно прикинуть цену с учётом промокода или объёма. Итоговую стоимость всё равно подтверждает владелец в Telegram.</p>
-
-      <div class="discount-grid">
-        <div class="discount-card">
-          <h2>Калькулятор объёма</h2>
-          <label class="field">
-            <span>Сколько Robux хочешь?</span>
-            <input type="number" min="50" step="50" id="rbxAmount" placeholder="Например, 1500" />
-          </label>
-          <label class="field">
-            <span>Промокод (необязательно)</span>
-            <input type="text" id="promoCode" placeholder="Например, ROMA10" />
-          </label>
-          <button class="primary-btn" id="calcBtn">Посчитать цену</button>
-
-          <div class="calc-result" id="calcResult">
-            Введи данные и нажми «Посчитать цену».
+      <div class="sub-panel">
+        <h2>Счётчик прогулок</h2>
+        <p class="hint">Счётчик хранится в браузере. Можно сбросить в начале дня.</p>
+        <div class="walk-counter">
+          <div class="walk-num">
+            Сегодня прогулок: <span id="walk-count">0</span>
+          </div>
+          <div class="walk-buttons">
+            <button id="walk-plus" class="btn-primary small">+ Прогулка</button>
+            <button id="walk-reset" class="btn-secondary small">Сбросить</button>
           </div>
         </div>
-
-        <div class="discount-card">
-          <h2>Подготовить заявку в Telegram</h2>
-          <label class="field">
-            <span>Твой ник или ID Roblox</span>
-            <input type="text" id="nickInput" placeholder="Ник или ID" />
-          </label>
-          <label class="field">
-            <span>Желаемый объём Robux</span>
-            <input type="number" min="50" step="50" id="rbxForOrder" placeholder="Например, 1000" />
-          </label>
-          <button class="ghost-btn" id="tgOrderBtn">Собрать сообщение и открыть Telegram</button>
-          <p class="tiny-note">
-            Никакие данные не отправляются через сайт — текст формируется только на твоём устройстве,
-            а дальше ты сам отправляешь его в Telegram @Exiletop_e.
-          </p>
-        </div>
       </div>
-    </section>
 
-    <!-- Другие игры -->
-    <section class="tab" id="tab-games">
-      <h1>Другие игры и валюты</h1>
-      <p class="lead">Основной фокус — Roblox, но можно обсуждать и другие проекты. Все условия согласуются лично с владельцем.</p>
-
-      <div class="games-grid">
-        <article class="game-card">
-          <h2>Minecraft</h2>
-          <p>Скины, реалмы, лицензии — можно обсудить индивидуально.</p>
-        </article>
-        <article class="game-card">
-          <h2>Fortnite</h2>
-          <p>V-Bucks и наборы. Только официальные способы, без странных схем.</p>
-        </article>
-        <article class="game-card">
-          <h2>CS2 / Steam</h2>
-          <p>Скины, балансы, подарки — обсуждаются отдельно.</p>
-        </article>
-        <article class="game-card">
-          <h2>Другое</h2>
-          <p>Если нужна какая-то валюта или премиум — напиши в Telegram, обсудим.</p>
-        </article>
+      <div class="sub-panel">
+        <h2>Фотки Евы</h2>
+        <p class="hint">Можно загрузить пару фото прямо сюда (они будут храниться в браузере и видны на этом устройстве).</p>
+        <input type="file" id="photo-input" accept="image/*" multiple />
+        <div id="photo-grid" class="photo-grid"></div>
+        <button id="clear-photos" class="btn-secondary small">Очистить фото (на этом устройстве)</button>
       </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="tab" id="tab-faq">
-      <h1>Частые вопросы</h1>
-      <div class="faq-list">
-        <details>
-          <summary>Кто может выставлять цены и пакеты?</summary>
-          <p>Только владелец romashka.rbxmarket. Это не открытая площадка. Другие люди не могут выкладывать свои услуги или менять прайс.</p>
-        </details>
-        <details>
-          <summary>Сколько ждать Robux?</summary>
-          <p>Обычно 5–7 дней. Для больших сумм точные сроки обсуждаются отдельно.</p>
-        </details>
-        <details>
-          <summary>Есть ли риск бана?</summary>
-          <p>Мы избегаем серых схем и не используем ворованные карты. Но ты всё равно должен следить за безопасностью своего аккаунта и не нарушать правила Roblox.</p>
-        </details>
-        <details>
-          <summary>Можно ли вернуть деньги?</summary>
-          <p>Если по нашей вине Robux не будут доставлены, вопрос решается с владельцем — возврат или повторная попытка.</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- О сервисе -->
-    <section class="tab" id="tab-about">
-      <h1>О сервисе</h1>
-      <p class="lead">
-        romashka.rbxmarket — это маленький, но аккуратный маркет по Robux, который развивается как личный проект.
-      </p>
-      <p>
-        Здесь нет аукционов, чужих продавцов и хаоса. Все сделки проходят только через владельца. Поэтому сайт выглядит
-        как маленький премиум-магазин, а не как огромная биржа.
-      </p>
-      <p>
-        Если ты хочешь предложить идею, придумать новую вкладку или спецпакет — просто напиши в Telegram. Сервис растёт
-        вместе с комьюнити, но контроль остаётся за одним человеком.
-      </p>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div>© 2025 romashka.rbxmarket — маркет роблоксов.</div>
-    <a href="https://t.me/Exiletop_e" class="footer-link" target="_blank">Связаться в Telegram @Exiletop_e</a>
+  <footer class="footer">
+    <div>© Семейный сайт Евы · данные сохраняются в браузере этого устройства (localStorage).</div>
+    <div class="footer-note">
+      Чтобы всё было видно у всех и на любых устройствах, можно позже подключить общий сервер/базу.
+    </div>
   </footer>
 
-  <script src="app.js" defer></script>
+  <script src="app.js"></script>
 </body>
 </html>
